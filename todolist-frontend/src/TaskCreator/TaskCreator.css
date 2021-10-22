@@ -1,0 +1,8 @@
+.task-creator {
+    display: inline-flex;
+    padding: 8px;
+}
+
+.task-creator__text{
+    margin: 0 8px;
+}

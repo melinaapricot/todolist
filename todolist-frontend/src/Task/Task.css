@@ -1,0 +1,7 @@
+.task{
+    display: flex;
+    margin-top: 8px;
+}
+.task__message{
+    margin: 0 8px;
+}
