@@ -1,4 +1,4 @@
-package eu.melinaapricot.TodoList
+package eu.melinaapricot.todolist
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
