@@ -20,7 +20,7 @@ function App() {
                 <h3>ALL TASKS</h3>
             </header>
             <main>
-                {tasks.map(task => <Task key={task.id} isDone={task.isDone} message={task.message}/>)}
+                {tasks.map(task => <Task onDelete={handleTaskDeletion} task={task} key={task.id}/>)}
                 <TaskCreator onCreate={handleTaskCreation}/>
             </main>
         </div>
@@ -28,7 +28,10 @@ function App() {
 
     function handleTaskCreation(task) {
         setTasks([task, ...tasks])
+    }
 
+    function handleTaskDeletion(idToDelete) {
+        setTasks(tasks.filter(task => task.id !== idToDelete))
     }
 }
 
