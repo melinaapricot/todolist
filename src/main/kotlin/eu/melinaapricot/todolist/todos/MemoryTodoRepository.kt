@@ -1,6 +1,7 @@
 package eu.melinaapricot.todolist.todos
 
 import org.springframework.stereotype.Component
+import java.time.Instant
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -10,11 +11,11 @@ class MemoryTodoRepository: TodoRepository {
   private val cache = ConcurrentHashMap<UUID, TodoItem>()
 
   override fun findOneById(id: UUID): TodoItem? = this.cache[id]
-  override fun findAll(): Sequence<TodoItem> = this.cache.values.asSequence()
+  override fun findAll(): Sequence<TodoItem> = this.cache.values.asSequence().sortedByDescending { it.createdAt }
 
   override fun create(item: TodoItem): TodoItem {
     val id = UUID.randomUUID()
-    val itemToSave = item.copy(id = id)
+    val itemToSave = item.copy(id = id, createdAt = Instant.now())
 
     this.cache[id] = itemToSave
     return itemToSave
