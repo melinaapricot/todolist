@@ -7,5 +7,5 @@ data class TodoItem(
   val id: UUID = UUID.randomUUID(),
   val isDone: Boolean = false,
   val message: String,
-  val createdAt: Instant
+  val createdAt: Instant = Instant.now()
 )

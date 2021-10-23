@@ -23,13 +23,10 @@ class MemoryTodoRepository: TodoRepository {
 
 
   override fun update(item: TodoItem): TodoItem {
-    val alreadyExists = this.cache.containsKey(item.id)
-    if (!alreadyExists) {
-      throw TodoNotFoundException("Todo item with id ${item.id} not found")
-    }
+    val alreadyExists = this.cache[item.id]
+            ?: throw TodoNotFoundException("Todo item with id ${item.id} not found")
 
-    val updatedItem = item.copy()
-
+    val updatedItem = item.copy(id = alreadyExists.id, createdAt = alreadyExists.createdAt)
     this.cache[item.id] = updatedItem
     return updatedItem
   }

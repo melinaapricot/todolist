@@ -4,7 +4,6 @@ import Task from './Task/Task'
 import TaskCreator from "./TaskCreator/TaskCreator";
 
 function App() {
-
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
@@ -20,7 +19,7 @@ function App() {
                 <h3>ALL TASKS</h3>
             </header>
             <main>
-                {tasks.map(task => <Task onDelete={handleTaskDeletion} task={task} key={task.id}/>)}
+                {tasks.map(task => <Task onCheck={handleCheckChange} onDelete={handleTaskDeletion} task={task} key={task.id}/>)}
                 <TaskCreator onCreate={handleTaskCreation}/>
             </main>
         </div>
@@ -32,6 +31,10 @@ function App() {
 
     function handleTaskDeletion(idToDelete) {
         setTasks(tasks.filter(task => task.id !== idToDelete))
+    }
+
+    function handleCheckChange(taskToChange) {
+        setTasks(tasks.map(task => task.id === taskToChange.id ? taskToChange : task));
     }
 }
 
