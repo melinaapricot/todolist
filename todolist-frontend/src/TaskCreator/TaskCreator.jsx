@@ -38,6 +38,10 @@ export default function TaskCreator(props) {
             },
         })
             .then(response => response.json())
-            .then(data => props.onCreate(data));
+            .then(data => {
+                props.onCreate(data);
+                setDescription("");
+            })
+
     }
 }
