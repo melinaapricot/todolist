@@ -19,7 +19,7 @@ function App() {
                 <h3>ALL TASKS</h3>
             </header>
             <main>
-                {tasks.map(task => <Task onCheck={handleCheckChange} onDelete={handleTaskDeletion} task={task} key={task.id}/>)}
+                {tasks.map(task => <Task onChange={handleTaskChange} onDelete={handleTaskDeletion} task={task} key={task.id}/>)}
                 <TaskCreator onCreate={handleTaskCreation}/>
             </main>
         </div>
@@ -33,7 +33,7 @@ function App() {
         setTasks(tasks.filter(task => task.id !== idToDelete))
     }
 
-    function handleCheckChange(taskToChange) {
+    function handleTaskChange(taskToChange) {
         setTasks(tasks.map(task => task.id === taskToChange.id ? taskToChange : task));
     }
 }

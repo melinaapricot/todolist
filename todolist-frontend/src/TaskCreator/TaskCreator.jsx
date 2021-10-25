@@ -24,6 +24,7 @@ export default function TaskCreator(props) {
     )
 
     function handleTaskCreation() {
+        if (!description) return;
         const requestBody = {
             message: description,
             isDone: isDone,
