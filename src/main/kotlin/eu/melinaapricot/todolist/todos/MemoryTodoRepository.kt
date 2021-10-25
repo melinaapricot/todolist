@@ -14,8 +14,13 @@ class MemoryTodoRepository: TodoRepository {
   override fun findAll(): Sequence<TodoItem> = this.cache.values.asSequence().sortedByDescending { it.createdAt }
 
   override fun create(item: TodoItem): TodoItem {
+    if(this.cache.size > SIZE_LIMIT) {
+      throw OutOfSpaceException("Can only save $SIZE_LIMIT todo tasks")
+    }
+
     val id = UUID.randomUUID()
     val itemToSave = item.copy(id = id, createdAt = Instant.now())
+    this.validateTodo(itemToSave)
 
     this.cache[id] = itemToSave
     return itemToSave
@@ -27,6 +32,8 @@ class MemoryTodoRepository: TodoRepository {
             ?: throw TodoNotFoundException("Todo item with id ${item.id} not found")
 
     val updatedItem = item.copy(id = alreadyExists.id, createdAt = alreadyExists.createdAt)
+    this.validateTodo(updatedItem)
+
     this.cache[item.id] = updatedItem
     return updatedItem
   }
@@ -40,6 +47,26 @@ class MemoryTodoRepository: TodoRepository {
     this.cache.remove(id)
   }
 
+  private fun validateTodo(todoItem: TodoItem) {
+    if (todoItem.message.length < 3) {
+      throw InvalidTodoItemException("Message cannot be less than 3 characters")
+    }
+
+    if (todoItem.message.length > 30) {
+      throw InvalidTodoItemException("Message cannot be more than 30 characters")
+    }
+
+    if (todoItem.message.contains("ass", ignoreCase = true)) {
+      throw InvalidTodoItemException("Please behave!")
+    }
+  }
+
 
   private class TodoNotFoundException(message: String): RuntimeException(message)
+  private class OutOfSpaceException(message: String): RuntimeException(message)
+  private class InvalidTodoItemException(message: String): RuntimeException(message)
+
+  companion object {
+    private const val SIZE_LIMIT = 10
+  }
 }
