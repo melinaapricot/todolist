@@ -4,4 +4,5 @@
 }
 .task__message{
     margin: 0 8px;
+    cursor: pointer;
 }

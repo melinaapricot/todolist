@@ -8,7 +8,6 @@ export default function Task(props) {
             <span onClick={handleMessageEdit} className="task__message">{props.task.message}</span>
             <button onClick={handleTaskDeletion}>x</button>
         </div>
-
     )
 
     function handleTaskDeletion() {
@@ -49,5 +48,4 @@ export default function Task(props) {
             .then(response => response.json())
             .then(props.onChange)
     }
-
 }
