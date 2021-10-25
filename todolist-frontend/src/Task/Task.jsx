@@ -27,11 +27,12 @@ export default function Task(props) {
 
     function handleMessageEdit() {
         const popupText = window.prompt("Enter your task description here:", "");
-        if (!popupText) return;
+        const trimmedMsg = popupText?.trim();
+        if (!trimmedMsg) return;
 
         const requestBody = {
             ...props.task,
-            message: popupText,
+            message: trimmedMsg,
         }
         updateTask(requestBody);
     }
